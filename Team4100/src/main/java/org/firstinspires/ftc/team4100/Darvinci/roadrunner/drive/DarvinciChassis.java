@@ -28,12 +28,13 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.team4100.Darvinci.roadrunner.drive.localizers.KalmanThreeWheelLocalizer;
+//import org.firstinspires.ftc.team4100.Darvinci.roadrunner.drive.localizers.KalmanThreeWheelLocalizer;
 import org.firstinspires.ftc.team4100.Darvinci.roadrunner.drive.localizers.RoadRunnerThreeWheelLocalizer;
 import org.firstinspires.ftc.team4100.Darvinci.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.team4100.Darvinci.roadrunner.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.team4100.Darvinci.roadrunner.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.team4100.Darvinci.roadrunner.util.LynxModuleUtil;
+import org.firstinspires.ftc.team4100.Darvinci.settings.DarvinciSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,8 +57,8 @@ import static org.firstinspires.ftc.team4100.Darvinci.roadrunner.drive.DriveCons
  */
 @Config
 public class DarvinciChassis extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(9, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(12, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = DarvinciSettings.CHASSIS_TRANSLATIONAL_PID;
+    public static PIDCoefficients HEADING_PID = DarvinciSettings.CHASSIS_HEADING_PID;
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -65,35 +66,34 @@ public class DarvinciChassis extends MecanumDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
-    private TrajectorySequenceRunner trajectorySequenceRunner;
+    private final TrajectorySequenceRunner trajectorySequenceRunner;
 
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
     private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
 
-    private TrajectoryFollower follower;
+    private final TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
-    private List<DcMotorEx> motors;
+    private final DcMotorEx leftFront;
+    private final DcMotorEx leftRear;
+    private final DcMotorEx rightRear;
+    private final DcMotorEx rightFront;
+    private final List<DcMotorEx> motors;
 
     private IMU imu;
-    private VoltageSensor batteryVoltageSensor;
+    private final VoltageSensor batteryVoltageSensor;
 
-    private List<Integer> lastEncPositions = new ArrayList<>();
-    private List<Integer> lastEncVels = new ArrayList<>();
+    private final List<Integer> lastEncPositions = new ArrayList<>();
+    private final List<Integer> lastEncVels = new ArrayList<>();
 
     public DarvinciChassis(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(1.2)), 1.3);
+                new Pose2d(0.7, 0.7, Math.toRadians(1.7)), 0.8);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
         batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
-
-        for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
-            module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
-        }
 
         leftFront = hardwareMap.get(DcMotorEx.class, "LF");
         leftRear = hardwareMap.get(DcMotorEx.class, "LB");

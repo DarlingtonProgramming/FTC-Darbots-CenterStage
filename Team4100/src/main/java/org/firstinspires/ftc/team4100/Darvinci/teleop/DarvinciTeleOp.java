@@ -1,133 +1,107 @@
 package org.firstinspires.ftc.team4100.Darvinci.teleop;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.button.Button;
+import com.arcrobotics.ftclib.command.button.Trigger;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
-import java.util.List;
+import org.firstinspires.ftc.team4100.Darvinci.DarvinciCore;
+import org.firstinspires.ftc.team4100.Darvinci.DarvinciTeleOpBase;
+import org.firstinspires.ftc.team4100.Darvinci.commands.BulkCacheHandler;
 
-@TeleOp(name="Darvinci - TeleOp")
-public class DarvinciTeleOp extends LinearOpMode {
-    private FtcDashboard Dashboard;
-    private List<LynxModule> Hubs;
-    private DcMotorEx LF, LB, RF, RB;
-    private DcMotorEx Slide, Intake;
-    private Servo Outtake;
-    private CRServo Push;
-    private double speed = 1;
+public class DarvinciTeleOp extends DarvinciTeleOpBase {
+    private GamepadEx m_driverOne, m_driverTwo;
+    private Button m_slideDown, m_slideUp, m_slideInc, m_slideDec;
+    private int m_slideTopPos;
+    private boolean m_driverToggle = false;
 
-    private int SLIDE_INITIAL;
+    public DarvinciTeleOp(DarvinciCore.AllianceType allianceType) {
+        super(allianceType);
+    }
 
     @Override
-    public void runOpMode() {
-        this.Dashboard = FtcDashboard.getInstance();
-        this.Hubs = hardwareMap.getAll(LynxModule.class);
-        for (LynxModule hub : this.Hubs) {
-            hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
-        }
+    public void initTeleOp() {
+        // Schedule to clear cache continuously (manual mode)
+        schedule(new BulkCacheHandler(hardwareMap));
 
-        this.LF = hardwareMap.get(DcMotorEx.class, "LF");
-        this.LB = hardwareMap.get(DcMotorEx.class, "LB");
-        this.RF = hardwareMap.get(DcMotorEx.class, "RF");
-        this.RB = hardwareMap.get(DcMotorEx.class, "RB");
+        // Initialize gamepads
+        m_driverOne = new GamepadEx(gamepad1);
+        m_driverTwo = new GamepadEx(gamepad2);
 
-        this.RB.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.RF.setDirection(DcMotorSimple.Direction.REVERSE);
+        // Initialize slide top position tracker
+        m_slideTopPos = robot.m_slide.getPosition();
 
-        this.LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.RF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.RB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Driver One
+        m_driverOne.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new InstantCommand());
+        m_driverOne.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(new InstantCommand());
+        m_driverOne.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(new InstantCommand(() -> robot.m_slide.setRelPosition(0)));
+        m_driverOne.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new InstantCommand(() -> robot.m_slide.setPosition(m_slideTopPos)));
 
-        this.Slide = hardwareMap.get(DcMotorEx.class, "Slide");
-        this.Slide.setDirection(DcMotorSimple.Direction.REVERSE);
-        SLIDE_INITIAL = this.Slide.getCurrentPosition() + 75;
-        this.Slide.setTargetPosition(SLIDE_INITIAL);
-        this.Slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.Slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.Slide.setPower(1);
+        m_driverOne.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whenPressed(new InstantCommand(() -> {
+                    if (!m_driverToggle) {
+                        robot.m_bucket.setRelPosition(-0.05);
+                    } else {
+                        robot.m_hook.in();
+                    }
+                }));
+        m_driverOne.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(new InstantCommand(() -> {
+                    if (!m_driverToggle) {
+                        robot.m_bucket.setRelPosition(0.05);
+                    } else {
+                        robot.m_hook.out();
+                    }
+                }));
+        m_driverOne.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(new InstantCommand(() -> {
+                    if (!m_driverToggle) {
+                        robot.m_slide.setRelPosition(-100);
+                    } else {
+                        robot.m_elevator.lower();
+                    }
+                }));
+        m_driverOne.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(new InstantCommand(() -> {
+                    if (!m_driverToggle) {
+                        if (robot.m_slide.getTargetPosition() > m_slideTopPos) {
+                            m_slideTopPos = robot.m_slide.getTargetPosition();
+                        }
+                        robot.m_slide.setRelPosition(100);
+                    } else {
+                        robot.m_elevator.rise();
+                    }
+                }));
 
-        this.Intake = hardwareMap.get(DcMotorEx.class, "Intake");
-        this.Intake.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.Intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        m_driverOne.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(new InstantCommand(robot.m_push::suck))
+                .whenReleased(new InstantCommand(robot.m_push::stop));
+        m_driverOne.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new InstantCommand(robot.m_push::spit))
+                .whenReleased(new InstantCommand(robot.m_push::stop));
+        new Trigger(() -> m_driverOne.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.8)
+                .whenActive(new InstantCommand(robot.m_intake::spit));
+        new Trigger(() -> m_driverOne.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.8)
+                .whenActive(new InstantCommand(robot.m_intake::suck));
 
-        this.Outtake = hardwareMap.get(Servo.class, "Outtake");
-        this.Push = hardwareMap.get(CRServo.class, "Push");
+        m_driverOne.getGamepadButton(GamepadKeys.Button.BACK)
+                .whenPressed(new InstantCommand(() -> m_driverToggle = !m_driverToggle));
 
-        Gamepad currentDriverOneGamepad = new Gamepad();
-        Gamepad previousDriverOneGamepad = new Gamepad();
+        // Initialize field-centric driving
+//        register(robot.m_drive);
+//        m_drive.setDefaultCommand(new InstantCommand(() -> {
+//            m_drive.driveFieldCentric(m_driverOne.getLeftX(), m_driverOne.getLeftY(), m_driverOne.getRightX());
+//        }));
+    }
 
-        waitForStart();
-
-        while (opModeIsActive()) {
-            try {
-                previousDriverOneGamepad.copy(currentDriverOneGamepad);
-                currentDriverOneGamepad.copy(gamepad1);
-            } catch (Error ignored) {}
-
-            double drive = -gamepad1.left_stick_y;
-            double strafe = -gamepad1.left_stick_x;
-            double rotate = gamepad1.right_stick_x;
-
-            if (currentDriverOneGamepad.dpad_left && !previousDriverOneGamepad.dpad_left) {
-                this.Outtake.setPosition(this.Outtake.getPosition() - 0.05);
-            }
-
-            if (currentDriverOneGamepad.dpad_right && !previousDriverOneGamepad.dpad_right) {
-                this.Outtake.setPosition(this.Outtake.getPosition() + 0.05);
-            }
-
-            if (currentDriverOneGamepad.y && !previousDriverOneGamepad.y) {
-                this.Slide.setTargetPosition(this.Slide.getCurrentPosition() + 100);
-            }
-
-            if (currentDriverOneGamepad.b && !previousDriverOneGamepad.b) {
-                this.Slide.setTargetPosition(SLIDE_INITIAL);
-            }
-
-            if (currentDriverOneGamepad.a && !previousDriverOneGamepad.a) {
-                this.Slide.setTargetPosition(this.Slide.getCurrentPosition() - 100);
-            }
-
-            if (currentDriverOneGamepad.right_bumper) {
-                this.Push.setPower(1);
-            } else if (currentDriverOneGamepad.left_bumper) {
-                this.Push.setPower(-1);
-            } else {
-                this.Push.setPower(0);
-            }
-
-            if (currentDriverOneGamepad.left_trigger > 0.8) {
-                this.Intake.setPower(-1);
-            } else if (currentDriverOneGamepad.right_trigger > 0.8) {
-                this.Intake.setPower(1);
-            } else {
-                this.Intake.setPower(0);
-            }
-
-            double LFPower = Range.clip(this.speed * (drive + rotate - strafe), -1.0, 1.0);
-            double LBPower = Range.clip(this.speed * (drive + rotate + strafe), -1.0, 1.0);
-            double RFPower = Range.clip(this.speed * (drive - rotate + strafe), -1.0, 1.0);
-            double RBPower = Range.clip(this.speed * (drive - rotate - strafe), -1.0, 1.0);
-
-            this.LF.setPower(LFPower);
-            this.LB.setPower(LBPower);
-            this.RF.setPower(RFPower);
-            this.RB.setPower(RBPower);
-
-            this.telemetry.addData("Slide", this.Slide.getCurrentPosition());
-            this.telemetry.addData("Outtake", this.Outtake.getPosition());
-            this.telemetry.update();
-        }
+    @Override
+    public void run() {
+        telemetry.addData("hey!", ":)");
+        telemetry.update();
     }
 }
-

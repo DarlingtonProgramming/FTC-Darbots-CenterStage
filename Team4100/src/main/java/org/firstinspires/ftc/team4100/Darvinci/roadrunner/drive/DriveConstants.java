@@ -21,7 +21,7 @@ public class DriveConstants {
 
     public static double kV = DarvinciSettings.CHASSIS_kV;
     public static double kA = DarvinciSettings.CHASSIS_kA;
-    public static double kStatic = 0;
+    public static double kStatic = DarvinciSettings.CHASSIS_kStatic;
 
     public static double MAX_VEL = DarvinciSettings.CHASSIS_MAX_VEL;
     public static double MAX_ACCEL = DarvinciSettings.CHASSIS_MAX_ACCEL;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.team4100.Darvinci.settings;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
@@ -9,30 +10,26 @@ public class DarvinciSettings {
     //========== Start of Chassis Settings ==========
     public static double CHASSIS_LENGTH = 17.5; // in
     public static double CHASSIS_WIDTH = 16.3; // in
-
     public static double CHASSIS_GEAR_RATIO = 1;
     public static boolean CHASSIS_MOTOR_USE_ENCODERS = false;
 
     public static double CHASSIS_MOTOR_TICKS_PER_REV = 537.7;
     public static double CHASSIS_MOTOR_MAX_RPM = 312;
     public static PIDFCoefficients CHASSIS_MOTOR_PIDF = new PIDFCoefficients(0, 0, 0, (32767 / (CHASSIS_MOTOR_MAX_RPM / 60 * CHASSIS_MOTOR_TICKS_PER_REV)));
-
     public static double CHASSIS_WHEEL_RADIUS = 1.8898; // in
     public static double CHASSIS_TRACK_WIDTH_ACTUAL = 14.5;
     public static double CHASSIS_TRACK_WIDTH_CALCULATED = 14.695; //14.644
-
     public static double CHASSIS_kV = 0.017745;
     public static double CHASSIS_kA = 0.00362;
     public static double CHASSIS_kStatic = 0;
-
     public static double CHASSIS_MAX_VEL = 46.5;
     public static double CHASSIS_MAX_ACCEL = 46.5;
-
     public static double CHASSIS_MAX_ANGULAR_VEL_DEG = 202.2258;
     public static double CHASSIS_MAX_ANGULAR_VEL_RAD = Math.toRadians(CHASSIS_MAX_ANGULAR_VEL_DEG);
-
     public static double CHASSIS_MAX_ANGULAR_ACCEL_DEG = 202.2258;
     public static double CHASSIS_MAX_ANGULAR_ACCEL_RAD = Math.toRadians(CHASSIS_MAX_ANGULAR_ACCEL_DEG);
+    public static PIDCoefficients CHASSIS_HEADING_PID = new PIDCoefficients(12, 0, 0);
+    public static PIDCoefficients CHASSIS_TRANSLATIONAL_PID = new PIDCoefficients(9, 0, 0);
     //========== End of Chassis Settings ==========
 
     //========== Start of Hub Settings ==========
@@ -58,11 +55,44 @@ public class DarvinciSettings {
     public static double TRACKING_WHEEL_Y_MULTIPLIER = 1.016753837906208;
     //========== End of Tracking Wheel Localization Settings ==========
 
-    public static double toCm(double in) {
-        return in / 2.54;
-    }
+    //========== Start of Intake Settings ==========
+    public static String INTAKE_NAME = "Intake";
+    public static boolean INTAKE_REVERSED = true;
+    public static double DEFAULT_INTAKE_SPEED = 1.0;
+    //========== End of Intake Settings ==========
 
-    public static double toIn(double cm) {
-        return cm * 2.54;
-    }
+    //========== Start of Outtake Settings ==========
+    public static String SLIDE_NAME = "Slide";
+    public static boolean SLIDE_REVERSED = true;
+    public static double DEFAULT_SLIDE_SPEED = 1.0;
+    public static int SLIDE_OFFSET = 35;
+    public static int SLIDE_INCREMENT_FACTOR = 100;
+
+    public static String BUCKET_NAME = "Outtake";
+    public static boolean BUCKET_REVERSED = false;
+    public static double BUCKET_POS_IN = 0.95;
+    public static double BUCKET_POS_OUT = 0.32;
+
+    public static String PUSH_NAME = "Push";
+    public static boolean PUSH_REVERSED = true;
+    public static double DEFAULT_PUSH_SPEED = 1.0;
+    //========== End of Outtake Settings ==========
+
+    //========== Start of PushUp Settings ==========
+    public static String HOOK_NAME = "Hook";
+    public static boolean HOOK_REVERSED = false;
+    public static double HOOK_POS_IN = 1;
+    public static double HOOK_POS_OUT = 0;
+    public static String ELEVATOR_NAME = "Elevator";
+    public static boolean ELEVATOR_REVERSED = false;
+    public static double DEFAULT_ELEVATOR_SPEED = 1.0;
+    public static int ELEVATOR_POS_TOP = 1000;
+    //========== End of PushUp Settings ==========
+
+    //========== Start of Plane Settings ==========
+    public static String PLANE_NAME = "Plane";
+    public static boolean PLANE_REVERSED = false;
+    public static double PLANE_POS_IN = 0.73;
+    public static double PLANE_POS_OUT = 0.35;
+    //========== End of Plane Settings ==========
 }
