@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.team4100.Darvinci.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous
+@Disabled
 public class PushUpLoop extends LinearOpMode {
     private DcMotorEx Elevator;
     private int ELEVATOR_INITIAL;

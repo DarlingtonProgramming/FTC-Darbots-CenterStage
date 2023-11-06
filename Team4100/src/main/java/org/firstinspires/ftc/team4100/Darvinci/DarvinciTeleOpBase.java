@@ -18,6 +18,7 @@ public abstract class DarvinciTeleOpBase extends CommandOpMode {
     public void initialize() {
         robot = new DarvinciCore(hardwareMap, m_allianceType);
         robot.m_drive.setPoseEstimate(PoseStorage.currentPose);
+        robot.m_plane.hold();
 
         initTeleOp();
     }

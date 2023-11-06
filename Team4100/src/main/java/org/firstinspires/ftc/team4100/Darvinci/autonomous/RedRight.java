@@ -4,7 +4,6 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.ParallelRaceGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciAutoBase;
@@ -31,14 +30,18 @@ public class RedRight extends DarvinciAutoBase {
     public void initAuto() {
         TrajectorySequence detectionTraj = null;
 
-        switch(detectionResult) {
+        switch (detectionResult) {
             case LEFT:
                 detectionTraj = robot.m_drive.trajectorySequenceBuilder(m_poseEstimate)
-                        .lineTo(new Vector2d(13.5, -58))
+                        .lineTo(new Vector2d(13.5, -58),
+                                DarvinciChassis.getVelocityConstraint(20, Math.toRadians(30), DriveConstants.TRACK_WIDTH),
+                                DarvinciChassis.getAccelerationConstraint(20))
                         .lineToSplineHeading(new Pose2d(10.5, -33, Math.toRadians(345)),
                                 DarvinciChassis.getVelocityConstraint(20, Math.toRadians(30), DriveConstants.TRACK_WIDTH),
                                 DarvinciChassis.getAccelerationConstraint(20))
-                        .back(4)
+                        .back(4,
+                                DarvinciChassis.getVelocityConstraint(20, Math.toRadians(30), DriveConstants.TRACK_WIDTH),
+                                DarvinciChassis.getAccelerationConstraint(20))
                         .lineToSplineHeading(new Pose2d(40, -30, Math.toRadians(180)))
                         .build();
                 break;
@@ -61,22 +64,20 @@ public class RedRight extends DarvinciAutoBase {
         schedule(
                 new SequentialCommandGroup(
                         new FollowTrajSequence(robot.m_drive, detectionTraj),
-                        new ParallelRaceGroup(
-                                new InstantCommand(() -> {
-                                    robot.m_slide.setRelPosition(690);
-                                }),
-                                new DriveToAprilTag(this, robot.m_drive, detectionTraj.end(), DarvinciAutonomousSettings.APRILTAG_X_OFFSET, DarvinciAutonomousSettings.APRILTAG_Y_OFFSET)
+                        new ParallelCommandGroup(
+                                new InstantCommand(() -> robot.m_slide.setRelPosition(DarvinciAutonomousSettings.SLIDE_DUMP_HEIGHT)),
+                                new DriveToAprilTag(this, robot.m_drive, detectionTraj.end())
                         ),
                         new DumpOnBackboard(robot.m_bucket, robot.m_push, robot.m_slide),
                         new ParallelCommandGroup(
                                 m_parking == Parking.RIGHT ?
-                                        new FollowTrajSequence(robot.m_drive, robot.m_drive.trajectorySequenceBuilder(new Pose2d(getAprilTagPoseConstant(getDetectionId()), Math.toRadians(180)).plus(new Pose2d(DarvinciAutonomousSettings.APRILTAG_X_OFFSET, DarvinciAutonomousSettings.APRILTAG_Y_OFFSET)))
+                                        new FollowTrajSequence(robot.m_drive, robot.m_drive.trajectorySequenceBuilder(new Pose2d(getAprilTagPoseConstant(getDetectionId()), Math.toRadians(180)).plus(new Pose2d(DarvinciAutonomousSettings.APRILTAG_X_ROBOT_OFFSET, DarvinciAutonomousSettings.APRILTAG_Y_ROBOT_OFFSET)))
                                                 .forward(5)
                                                 .lineToSplineHeading(new Pose2d(41, -59, Math.toRadians(180)))
                                                 .lineToSplineHeading(new Pose2d(57, -59, Math.toRadians(180)))
                                                 .build()
                                         ) :
-                                        new FollowTrajSequence(robot.m_drive, robot.m_drive.trajectorySequenceBuilder(new Pose2d(getAprilTagPoseConstant(getDetectionId()), Math.toRadians(180)).plus(new Pose2d(DarvinciAutonomousSettings.APRILTAG_X_OFFSET, DarvinciAutonomousSettings.APRILTAG_Y_OFFSET)))
+                                        new FollowTrajSequence(robot.m_drive, robot.m_drive.trajectorySequenceBuilder(new Pose2d(getAprilTagPoseConstant(getDetectionId()), Math.toRadians(180)).plus(new Pose2d(DarvinciAutonomousSettings.APRILTAG_X_ROBOT_OFFSET, DarvinciAutonomousSettings.APRILTAG_Y_ROBOT_OFFSET)))
                                                 .forward(5)
                                                 .lineToSplineHeading(new Pose2d(43, -11, Math.toRadians(180)))
                                                 .lineToSplineHeading(new Pose2d(57, -11, Math.toRadians(180)))

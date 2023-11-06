@@ -12,7 +12,6 @@ public class PlaneSubsystem extends SubsystemBase {
     public PlaneSubsystem(final HardwareMap hwMap, final String name) {
         plane = hwMap.get(Servo.class, name);
         plane.setDirection(DarvinciSettings.PLANE_REVERSED ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
-        this.hold();
     }
 
     public void shoot() {

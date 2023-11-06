@@ -65,13 +65,13 @@ public class DarvinciSettings {
     public static String SLIDE_NAME = "Slide";
     public static boolean SLIDE_REVERSED = true;
     public static double DEFAULT_SLIDE_SPEED = 1.0;
-    public static int SLIDE_OFFSET = 35;
+    public static int SLIDE_OFFSET = 32;
     public static int SLIDE_INCREMENT_FACTOR = 100;
 
     public static String BUCKET_NAME = "Outtake";
     public static boolean BUCKET_REVERSED = false;
     public static double BUCKET_POS_IN = 0.95;
-    public static double BUCKET_POS_OUT = 0.32;
+    public static double BUCKET_POS_OUT = 0.28;
 
     public static String PUSH_NAME = "Push";
     public static boolean PUSH_REVERSED = true;
@@ -80,19 +80,19 @@ public class DarvinciSettings {
 
     //========== Start of PushUp Settings ==========
     public static String HOOK_NAME = "Hook";
-    public static boolean HOOK_REVERSED = false;
+    public static boolean HOOK_REVERSED = true;
     public static double HOOK_POS_IN = 1;
     public static double HOOK_POS_OUT = 0;
     public static String ELEVATOR_NAME = "Elevator";
     public static boolean ELEVATOR_REVERSED = false;
     public static double DEFAULT_ELEVATOR_SPEED = 1.0;
-    public static int ELEVATOR_POS_TOP = 1000;
+    public static int ELEVATOR_POS_TOP = 3200;
     //========== End of PushUp Settings ==========
 
     //========== Start of Plane Settings ==========
     public static String PLANE_NAME = "Plane";
     public static boolean PLANE_REVERSED = false;
-    public static double PLANE_POS_IN = 0.73;
-    public static double PLANE_POS_OUT = 0.35;
+    public static double PLANE_POS_IN = 0.53;
+    public static double PLANE_POS_OUT = 0.73;
     //========== End of Plane Settings ==========
 }

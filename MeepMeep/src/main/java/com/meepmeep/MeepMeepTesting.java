@@ -55,26 +55,40 @@ public class MeepMeepTesting {
         // Init MeepMeep
         MeepMeep meepMeep = new MeepMeep(700);
 
-                RoadRunnerBotEntity blueRightRightParking = new DefaultBotBuilder(meepMeep)
+        RoadRunnerBotEntity blueRightRightParking = new DefaultBotBuilder(meepMeep)
                 .setColorScheme(new ColorSchemeBlueDark())
                 .setDriveTrainType(DriveTrainType.MECANUM)
                 .setDimensions(robotWidth, robotHeight)
                 .setConstraints(maxVel, maxAccel, maxAngularVel, maxAngularAccel, trackWidth)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-60.13, -35.04, Math.toRadians(180.00)))
-                                .splineToSplineHeading(new Pose2d(-36.00, -35.04, Math.toRadians(180.00)), Math.toRadians(0.45))
-                                .splineToConstantHeading(new Vector2d(-48.06, -49.21), Math.toRadians(-76.65))
-                                .splineToSplineHeading(new Pose2d(-39.64, -51.32, Math.toRadians(180.00)), Math.toRadians(268.88))
-                                .splineTo(new Vector2d(-12.83, -51.32), Math.toRadians(49.40))
-                                .splineTo(new Vector2d(-12.06, -36.77), Math.toRadians(94.70))
-                                .splineTo(new Vector2d(-11.11, -23.17), Math.toRadians(77.37))
-                                .splineTo(new Vector2d(-11.11, 1.72), Math.toRadians(106.47))
-                                .splineTo(new Vector2d(-16.28, 22.60), Math.toRadians(111.12))
-                                .splineTo(new Vector2d(-36.77, 38.68), Math.toRadians(90.00))
-                                .splineTo(new Vector2d(-52.85, 43.09), Math.toRadians(174.96))
-                                .splineTo(new Vector2d(-59.94, 59.55), Math.toRadians(90.00))
+                        drive.trajectorySequenceBuilder(new Pose2d(11.5, 62, Math.toRadians(270)))
+                                .waitSeconds(20)
+                                .forward(27)
+                                .back(7)
+                                .lineToSplineHeading(new Pose2d(48, 36, Math.toRadians(0)))
                                 .build()
                         );
+
+//                RoadRunnerBotEntity blueRightRightParking = new DefaultBotBuilder(meepMeep)
+//                .setColorScheme(new ColorSchemeBlueDark())
+//                .setDriveTrainType(DriveTrainType.MECANUM)
+//                .setDimensions(robotWidth, robotHeight)
+//                .setConstraints(maxVel, maxAccel, maxAngularVel, maxAngularAccel, trackWidth)
+//                .followTrajectorySequence(drive ->
+//                        drive.trajectorySequenceBuilder(new Pose2d(-60.13, -35.04, Math.toRadians(180.00)))
+//                                .splineToSplineHeading(new Pose2d(-36.00, -35.04, Math.toRadians(180.00)), Math.toRadians(0.45))
+//                                .splineToConstantHeading(new Vector2d(-48.06, -49.21), Math.toRadians(-76.65))
+//                                .splineToSplineHeading(new Pose2d(-39.64, -51.32, Math.toRadians(180.00)), Math.toRadians(268.88))
+//                                .splineTo(new Vector2d(-12.83, -51.32), Math.toRadians(49.40))
+//                                .splineTo(new Vector2d(-12.06, -36.77), Math.toRadians(94.70))
+//                                .splineTo(new Vector2d(-11.11, -23.17), Math.toRadians(77.37))
+//                                .splineTo(new Vector2d(-11.11, 1.72), Math.toRadians(106.47))
+//                                .splineTo(new Vector2d(-16.28, 22.60), Math.toRadians(111.12))
+//                                .splineTo(new Vector2d(-36.77, 38.68), Math.toRadians(90.00))
+//                                .splineTo(new Vector2d(-52.85, 43.09), Math.toRadians(174.96))
+//                                .splineTo(new Vector2d(-59.94, 59.55), Math.toRadians(90.00))
+//                                .build()
+//                        );
 
 //        // Blue Left
 //        RoadRunnerBotEntity blueLeftLeftParking = new DefaultBotBuilder(meepMeep)
@@ -332,14 +346,15 @@ public class MeepMeepTesting {
 //                        }
 //                );
 
-//        Image img = null;
-//        try {
-//            img = ImageIO.read(new File("../../../../../resources/field-2023-juice-dark.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        Image img = null;
+        try {
+            img = ImageIO.read(new File("/Users/aenverga/Documents/FTC-Darbots-CenterStage/MeepMeepTesting/src/main/resources/field-2023-juice-dark.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        meepMeep//.setBackground(img)
+        meepMeep
+                .setBackground(img)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
 //                .addEntity(blueLeftLeftParking)

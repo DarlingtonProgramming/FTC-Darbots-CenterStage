@@ -5,6 +5,7 @@ import android.util.Size;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -36,7 +37,6 @@ public abstract class DarvinciAutoBase extends CommandOpMode {
     protected PropDetectionProcessor propDetectionProcessor;
     protected AprilTagProcessor aprilTagProcessor;
     protected VisionPortal vision;
-    protected Pose2d m_aprilTagPose = null;
 
     public DarvinciAutoBase(DarvinciCore.AllianceType allianceType, Pose2d startPose) {
         m_allianceType = allianceType;
@@ -55,21 +55,23 @@ public abstract class DarvinciAutoBase extends CommandOpMode {
         while (true) {
             List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
             telemetry.addData("AprilTags Detected", currentDetections.size());
-            telemetry.update();
 
             for (AprilTagDetection detection : currentDetections) {
                 // If it's the one we're looking for, add to the list
                 if (detection.id == DETECTION_ID) {
+                    telemetry.addData("Found correct ID", detection.id);
                     correctDetectionList.add(detection.ftcPose);
                 }
             }
+
+            telemetry.update();
 
             // Max number of attempts
             if (++attempts > DarvinciAutonomousSettings.APRILTAG_AVGED_ATTEMPTS) {
                 break;
             }
 
-            sleep(5);
+            sleep(15);
         }
 
         if (correctDetectionList.size() == 0) {
@@ -134,6 +136,7 @@ public abstract class DarvinciAutoBase extends CommandOpMode {
         webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
         propDetectionProcessor = new PropDetectionProcessor(m_allianceType);
         aprilTagProcessor = new AprilTagProcessor.Builder()
+                .setLensIntrinsics(821.993, 821.993, 330.489, 248.997) // for c310, might need recalculation
                 .setDrawAxes(true)
                 .setDrawTagOutline(true)
                 .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
@@ -165,10 +168,12 @@ public abstract class DarvinciAutoBase extends CommandOpMode {
         vision.setProcessorEnabled(aprilTagProcessor, true);
 
         initAuto();
+    }
 
-        schedule(new InstantCommand(() -> {
-            PoseStorage.currentPose = robot.m_drive.getPoseEstimate();
-        }));
+    @Override
+    public void run() {
+        super.run();
+        PoseStorage.currentPose = robot.m_drive.getPoseEstimate();
     }
 
     public abstract void initAuto();

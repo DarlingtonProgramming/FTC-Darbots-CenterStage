@@ -40,4 +40,12 @@ public class IntakeSubsystem extends SubsystemBase {
         intake.setPower(0);
     }
 
+    public boolean isSucking() {
+        return intake.getPower() == speed;
+    }
+
+    public boolean isSpitting() {
+        return intake.getPower() == -speed;
+    }
+
 }

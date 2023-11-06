@@ -34,8 +34,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
@@ -62,7 +65,6 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @TeleOp(name = "Concept: AprilTag Easy", group = "Test")
-@Disabled
 public class AprilTagTest extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
@@ -117,9 +119,15 @@ public class AprilTagTest extends LinearOpMode {
      * Initialize the AprilTag processor.
      */
     private void initAprilTag() {
-
         // Create the AprilTag processor the easy way.
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
+        aprilTag = new AprilTagProcessor.Builder()
+                .setLensIntrinsics(849.12, 849.12, 362.297, 233.195) // for c310, might need recalculation
+                .setDrawAxes(true)
+                .setDrawTagOutline(true)
+                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+                .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
+                .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+                .build();
 
         // Create the vision portal the easy way.
         if (USE_WEBCAM) {
