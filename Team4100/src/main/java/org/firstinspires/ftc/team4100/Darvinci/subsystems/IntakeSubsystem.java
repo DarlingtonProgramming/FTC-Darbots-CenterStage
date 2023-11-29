@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.team4100.Darvinci.settings.DarvinciSettings;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -48,4 +49,7 @@ public class IntakeSubsystem extends SubsystemBase {
         return intake.getPower() == -speed;
     }
 
+    public double getVoltage() {
+        return intake.getCurrent(CurrentUnit.AMPS);
+    }
 }

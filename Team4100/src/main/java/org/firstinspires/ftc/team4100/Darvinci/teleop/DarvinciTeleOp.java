@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.team4100.Darvinci.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
@@ -12,6 +14,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciCore;
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciTeleOpBase;
@@ -24,6 +27,8 @@ public class DarvinciTeleOp extends DarvinciTeleOpBase {
     private int m_slideTopPos;
     private double m_headingOffset;
     private double m_speed = 1;
+
+    Telemetry _t = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
     public DarvinciTeleOp(DarvinciCore.AllianceType allianceType, double headingOffset) {
         super(allianceType);
@@ -156,8 +161,10 @@ public class DarvinciTeleOp extends DarvinciTeleOpBase {
         robot.m_drive.setMotorPowers(m_speed * LFPower, m_speed * LBPower, m_speed * RBPower, m_speed * RFPower);
         robot.m_drive.update();
 
-        telemetry.addData("hey!", ":)");
-        telemetry.addData("offset", m_headingOffset);
-        telemetry.update();
+        _t.addData("voltage", robot.m_intake.getVoltage());
+        _t.update();
+//        telemetry.addData("hey!", ":)");
+//        telemetry.addData("offset", m_headingOffset);
+//        telemetry.update();
     }
 }

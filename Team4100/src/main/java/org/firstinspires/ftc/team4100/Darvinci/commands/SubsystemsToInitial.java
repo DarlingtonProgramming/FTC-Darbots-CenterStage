@@ -12,11 +12,11 @@ public class SubsystemsToInitial extends SequentialCommandGroup {
     public SubsystemsToInitial(BucketSubsystem bucket, SlideSubsystem slide) {
         addCommands(
                 new InstantCommand(() -> bucket.inRel(-0.13)),
-                new WaitCommand(250),
+                new WaitCommand(400),
                 new InstantCommand(() -> slide.setInitialRel(75)),
                 new WaitUntilCommand(() -> slide.getRelPosition() < 95),
                 new InstantCommand(bucket::in),
-                new WaitCommand(500),
+                new WaitCommand(650),
                 new InstantCommand(() -> slide.setInitialRel(-25))
         );
         addRequirements(bucket, slide);

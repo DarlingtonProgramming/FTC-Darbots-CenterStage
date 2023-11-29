@@ -64,6 +64,7 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
+@Disabled
 @TeleOp(name = "Concept: AprilTag Easy", group = "Test")
 public class AprilTagTest extends LinearOpMode {
 
@@ -124,6 +125,7 @@ public class AprilTagTest extends LinearOpMode {
                 .setLensIntrinsics(849.12, 849.12, 362.297, 233.195) // for c310, might need recalculation
                 .setDrawAxes(true)
                 .setDrawTagOutline(true)
+                .setDrawCubeProjection(true)
                 .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
                 .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
                 .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)

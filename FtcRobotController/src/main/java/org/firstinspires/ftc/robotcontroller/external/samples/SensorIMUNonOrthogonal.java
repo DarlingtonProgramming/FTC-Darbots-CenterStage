@@ -143,9 +143,9 @@ public class SensorIMUNonOrthogonal extends LinearOpMode
 
         // The next three lines define the desired axis rotations.
         // To Do: EDIT these values to match YOUR mounting configuration.
-        double xRotation = 0;  // enter the desired X rotation angle here.
-        double yRotation = 0;  // enter the desired Y rotation angle here.
-        double zRotation = 0;  // enter the desired Z rotation angle here.
+        double xRotation = -90;  // enter the desired X rotation angle here.
+        double yRotation = 23;  // enter the desired Y rotation angle here.
+        double zRotation = 180;  // enter the desired Z rotation angle here.
 
         Orientation hubRotation = xyzOrientation(xRotation, yRotation, zRotation);
 

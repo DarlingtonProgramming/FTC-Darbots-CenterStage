@@ -10,4 +10,7 @@ public class FieldConstant {
     public final static Vector2d APRIL_TAG_FIVE = new Vector2d(60, -35.25);
     public final static Vector2d APRIL_TAG_SIX = new Vector2d(60, -41.4);
 
+    public static Vector2d getAprilTagPose(int aprilTagNumber) {
+        return new Vector2d();
+    }
 }

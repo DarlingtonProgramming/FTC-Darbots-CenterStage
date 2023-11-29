@@ -26,15 +26,15 @@ import javax.imageio.ImageIO;
 public class MeepMeepTesting {
     public static void main(String[] args) {
         // Robot dimensions
-        final double robotWidth = 16.3;
-        final double robotHeight = 17.5;
+        final double robotWidth = 15.2;
+        final double robotHeight = 17;
 
         // Drive constants
-        final double maxVel = 46.5;
-        final double maxAccel = 46.5;
-        final double maxAngularVel = Math.toRadians(202.2258);
-        final double maxAngularAccel = Math.toRadians(202.2258);
-        final double trackWidth = 14.695;
+        final double maxVel = 64.3;
+        final double maxAccel = 64.3;
+        final double maxAngularVel = 4.836261028474933;
+        final double maxAngularAccel = 4.836261028474933;
+        final double trackWidth = 13.15;
 
         // Starting trajectories
         final Pose2d blueLeftStartTraj = new Pose2d(10.5, 62, Math.toRadians(90));
@@ -61,11 +61,37 @@ public class MeepMeepTesting {
                 .setDimensions(robotWidth, robotHeight)
                 .setConstraints(maxVel, maxAccel, maxAngularVel, maxAngularAccel, trackWidth)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(11.5, 62, Math.toRadians(270)))
-                                .waitSeconds(20)
-                                .forward(27)
-                                .back(7)
-                                .lineToSplineHeading(new Pose2d(48, 36, Math.toRadians(0)))
+                        drive.trajectorySequenceBuilder(new Pose2d(14, 61.75, Math.toRadians(270.00)))
+                                .waitSeconds(2)
+//                                .lineTo(new Vector2d(23.42, 39.10))
+//                                .splineToLinearHeading(new Pose2d(49.94, 40.45, Math.toRadians(180.00)), Math.toRadians(-10.00))
+//                                .lineTo(new Vector2d(12.58, 34.45))
+//                                .splineToLinearHeading(new Pose2d(49.94, 34.45, Math.toRadians(180.00)), Math.toRadians(0.00))
+//                                .lineToSplineHeading(new Pose2d(6.97, 34.84, Math.toRadians(46.00)))
+//                                .lineToSplineHeading(new Pose2d(50.32, 29.23, Math.toRadians(180.00)))
+//                                .waitSeconds(2)
+//                                .splineToConstantHeading(new Vector2d(47.61, 54.97), Math.toRadians(44.60))
+//                                .splineToConstantHeading(new Vector2d(58.26, 60.39), Math.toRadians(0.00))
+//                                .splineToConstantHeading(new Vector2d(46.84, 13.16), Math.toRadians(0.00))
+//                                .splineToConstantHeading(new Vector2d(60.97, 13.16), Math.toRadians(0.00))
+                                .lineTo(new Vector2d(11.5, 37))
+                                .waitSeconds(1)
+                                .lineToSplineHeading(new Pose2d(26, 43, Math.toRadians(180)))
+                                .waitSeconds(1)
+                                .lineTo(new Vector2d(26, 31))
+                                .waitSeconds(1)
+                                .forward(16)
+                                .waitSeconds(1)
+                                .lineTo(new Vector2d(52.5, 30.5))
+                                .waitSeconds(1)
+//                                .lineTo(new Vector2d(27.45, 10.75))
+//                                .lineTo(new Vector2d(-58.00, 11.63))
+//                                .lineTo(new Vector2d(27.45, 10.75))
+//                                .lineTo(new Vector2d(48, 36.05))
+//                                .lineTo(new Vector2d(27.45, 10.75))
+//                                .lineTo(new Vector2d(-58.00, 11.63))
+//                                .lineTo(new Vector2d(27.45, 10.75))
+//                                .lineTo(new Vector2d(48, 36.05))
                                 .build()
                         );
 
