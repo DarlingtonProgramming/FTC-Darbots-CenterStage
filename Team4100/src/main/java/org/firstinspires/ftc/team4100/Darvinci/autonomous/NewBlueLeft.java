@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciAutoBase;
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciCore;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.team4100.Darvinci.commands.SubsystemsToInitial;
 import org.firstinspires.ftc.team4100.Darvinci.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.team4100.Darvinci.settings.DarvinciAutonomousSettings;
 
+@Disabled
 @Autonomous(name="blue")
 public class NewBlueLeft extends DarvinciAutoBase {
     public static final Pose2d m_poseEstimate = new Pose2d(15.29, 62, Math.toRadians(90.00));

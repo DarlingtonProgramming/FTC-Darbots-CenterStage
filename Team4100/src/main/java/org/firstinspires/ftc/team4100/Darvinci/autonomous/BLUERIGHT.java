@@ -31,7 +31,6 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
-@Config
 @Disabled
 @Autonomous(name=" BLUE - RIGHT", group = "Competition", preselectTeleOp = "TeleOp Blue")
 public class BLUERIGHT extends LinearOpMode {

@@ -15,17 +15,17 @@ public class DriveConstants {
             getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
     public static double WHEEL_RADIUS = 1.8898;
-    public static double GEAR_RATIO = 1 * (59.8 / 59.25388285713276);
-    public static double TRACK_WIDTH = 15.98;
+    public static double GEAR_RATIO = 1 * (37.8 / 37.34644554178704);
+    public static double TRACK_WIDTH = 15.25;
 
-    public static double kV = 0.0169;
-    public static double kA = 0.0030;
+    public static double kV = 0.0161;
+    public static double kA = 0.0029;
     public static double kStatic = 0;
 
-    public static double MAX_VEL = 43;
-    public static double MAX_ACCEL = 43;
-    public static double MAX_ANG_VEL = Math.toRadians(200);
-    public static double MAX_ANG_ACCEL = Math.toRadians(200);
+    public static double MAX_VEL = 45.48291908330528;
+    public static double MAX_ACCEL = 45.48291908330528;
+    public static double MAX_ANG_VEL = Math.toRadians(252.92903568306565);
+    public static double MAX_ANG_ACCEL = Math.toRadians(252.92903568306565);
 
     public static RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIR = RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
     public static RevHubOrientationOnRobot.UsbFacingDirection USB_FACING_DIR = RevHubOrientationOnRobot.UsbFacingDirection.LEFT;

@@ -14,20 +14,23 @@ import org.firstinspires.ftc.team4100.Scrappy.util.PoseStorage;
 
 public abstract class ScrappyTeleOpBase extends CommandOpMode {
     private final ScrappyCore.AllianceType m_allianceType;
+    private final ScrappyCore.AllianceSide m_allianceSide;
+
     protected ScrappyCore robot;
     protected IMU imu;
 
-    public ScrappyTeleOpBase(ScrappyCore.AllianceType allianceType) {
+    public ScrappyTeleOpBase(ScrappyCore.AllianceType allianceType, ScrappyCore.AllianceSide allianceSide) {
         m_allianceType = allianceType;
+        m_allianceSide = allianceSide;
     }
 
     @Override
     public void initialize() {
         telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        robot = new ScrappyCore(hardwareMap, m_allianceType);
+        robot = new ScrappyCore(hardwareMap, m_allianceType, m_allianceSide);
         imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(xyzOrientation(180, 90, 23)));
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(xyzOrientation(180, 90, 10)));
         imu.initialize(parameters);
 
         robot.m_drive.setPoseEstimate(PoseStorage.currentPose);

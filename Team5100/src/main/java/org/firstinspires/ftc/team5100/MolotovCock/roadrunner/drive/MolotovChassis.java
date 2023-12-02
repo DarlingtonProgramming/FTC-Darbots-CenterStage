@@ -58,7 +58,7 @@ public class MolotovChassis extends MecanumDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(7, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(7, 0, 0);
 
-    public static double LATERAL_MULTIPLIER = 44.03073776243268/37.45;
+    public static double LATERAL_MULTIPLIER = 24.390500843373832/24.5;
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
@@ -84,7 +84,7 @@ public class MolotovChassis extends MecanumDrive {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.7, 0.7, Math.toRadians(3)), 1.8);
+                new Pose2d(0.8, 0.8, Math.toRadians(3)), 1);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 

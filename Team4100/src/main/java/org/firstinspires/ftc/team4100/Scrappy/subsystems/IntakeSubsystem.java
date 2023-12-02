@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class IntakeSubsystem extends SubsystemBase {
-    public static double EXT_UP_POS = 1;
-    public static double EXT_DOWN_POS = 0;
+    public static double EXT_UP_POS = 0.65;
+    public static double EXT_DOWN_POS = 0.12;
 
     private final DcMotorEx m_intake;
     private final Servo m_extension;
@@ -24,7 +24,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         m_intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        m_intake.setDirection(DcMotorSimple.Direction.REVERSE);
         this.stop();
     }
 

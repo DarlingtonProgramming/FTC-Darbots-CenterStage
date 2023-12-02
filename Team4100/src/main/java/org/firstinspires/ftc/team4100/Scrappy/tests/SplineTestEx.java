@@ -4,17 +4,19 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.team4100.Scrappy.commands.FollowTrajSequence;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyAutoBase;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyCore;
 
+@Disabled
 @Autonomous
 public class SplineTestEx extends ScrappyAutoBase {
     public static final Pose2d m_poseEstimate = new Pose2d(15.29, 61.5, Math.toRadians(270));
 
     public SplineTestEx() {
-        super(ScrappyCore.AllianceType.BLUE, m_poseEstimate);
+        super(ScrappyCore.AllianceType.BLUE, ScrappyCore.AllianceSide.LEFT, m_poseEstimate);
     }
 
     @Override

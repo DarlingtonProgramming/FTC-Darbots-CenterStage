@@ -3,6 +3,7 @@ package org.firstinspires.ftc.team4100.Darvinci.teleop.old;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -18,7 +19,8 @@ import org.firstinspires.ftc.team4100.Darvinci.settings.DarvinciSettings;
 
 import java.util.List;
 
-@TeleOp(name="Old TeleOp - Field Centric", group="old")
+@Disabled
+@TeleOp(name="Old TeleOp - Field Centric gsay", group="old")
 public class DarvinciTeleOpFieldCentric extends LinearOpMode {
     private FtcDashboard Dashboard;
     private List<LynxModule> Hubs;

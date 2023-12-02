@@ -5,7 +5,7 @@ import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-@Config
+//@Config
 public class DarvinciSettings {
     //========== Start of Chassis Settings ==========
     public static double CHASSIS_LENGTH = 17.5; // in

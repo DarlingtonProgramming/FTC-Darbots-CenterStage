@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.team4100.Scrappy.tests;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -69,6 +69,7 @@ import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
  *
  * Finally, edit this OpMode to use at least one angle around an axis to orient your Hub.
  */
+@Disabled
 @TeleOp(name = "Sensor: IMU Non-Orthogonal", group = "Sensor")
 public class IMUOrientation extends LinearOpMode
 {

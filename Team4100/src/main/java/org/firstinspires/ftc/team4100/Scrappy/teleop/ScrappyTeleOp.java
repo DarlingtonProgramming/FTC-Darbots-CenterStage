@@ -7,21 +7,19 @@ import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyCore;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyTeleOpBase;
 
-@TeleOp(name="Scrappy TeleOp")
 public class ScrappyTeleOp extends ScrappyTeleOpBase {
     private GamepadEx m_driverOne, m_driverTwo;
     private double m_headingOffset = 0;
     private int m_slideTopPos = 0;
     private double m_speed = 1;
 
-    public ScrappyTeleOp() {
-        super(ScrappyCore.AllianceType.BLUE);
+    public ScrappyTeleOp(ScrappyCore.AllianceType allianceType) {
+        super(allianceType, ScrappyCore.AllianceSide.LEFT);
     }
 
     @Override
@@ -62,9 +60,10 @@ public class ScrappyTeleOp extends ScrappyTeleOpBase {
 
         // Manual IntakeExt
         m_driverOne.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(new InstantCommand(() -> robot.m_intake.setExtRelativePosition(-0.05)));
+                .whenPressed(new InstantCommand(() -> robot.m_intake.setExtRelativePosition(.6)));
+
         m_driverOne.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
-                .whenPressed(new InstantCommand(() -> robot.m_intake.setExtRelativePosition(0.05)));
+                .whenPressed(new InstantCommand(() -> robot.m_intake.setExtRelativePosition(0.1)));
 
         // Dropper
         m_driverOne.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
@@ -98,6 +97,12 @@ public class ScrappyTeleOp extends ScrappyTeleOpBase {
                         ),
                         () -> robot.m_intake.isSpitting()
                 ));
+
+        m_driverTwo.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(new InstantCommand(() -> robot.m_plane.setRelativePosition(-0.05)));
+
+        m_driverTwo.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(new InstantCommand(() -> robot.m_plane.setRelativePosition(0.05)));
     }
     @Override
     public void run() {
@@ -111,11 +116,12 @@ public class ScrappyTeleOp extends ScrappyTeleOpBase {
         telemetry.addData("X", currentPose.getX());
         telemetry.addData("Y", currentPose.getY());
         telemetry.addData("Heading (raw)", Math.toDegrees(gyroAngle));
-        telemetry.addData("Heading (offsett)", Math.toDegrees(gyroAngle - m_headingOffset));
+        telemetry.addData("Heading (offset)", Math.toDegrees(gyroAngle - m_headingOffset));
         telemetry.addLine();
         telemetry.addData("Dropper", robot.m_dropper.getPosition());
         telemetry.addData("Lift", robot.m_lift.getPosition());
         telemetry.addData("IntakeExt", robot.m_intake.getExtPosition());
+        telemetry.addData("Plane", robot.m_plane.getPosition());
         telemetry.update();
     }
 }

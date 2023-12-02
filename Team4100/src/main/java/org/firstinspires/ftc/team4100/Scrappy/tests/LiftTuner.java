@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,6 +17,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+@Disabled
 @Config
 @Autonomous
 public class LiftTuner extends LinearOpMode {

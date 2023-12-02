@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciAutoBase;
 import org.firstinspires.ftc.team4100.Darvinci.DarvinciCore;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.team4100.Darvinci.commands.FollowTrajSequence;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyAutoBase;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyCore;
 
+@Disabled
 @Autonomous
 public class SplineTestEx2 extends DarvinciAutoBase {
         public static final Pose2d m_poseEstimate = new Pose2d(15.29, 63.10, Math.toRadians(90.00));

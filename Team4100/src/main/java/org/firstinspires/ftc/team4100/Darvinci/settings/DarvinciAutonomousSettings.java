@@ -3,7 +3,7 @@ package org.firstinspires.ftc.team4100.Darvinci.settings;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
-@Config
+//@Config
 public class DarvinciAutonomousSettings {
     public static Pose2d BLUE_LEFT_STARTING_POSE = new Pose2d(10.5, 62, Math.toRadians(90));
     public static Pose2d RED_LEFT_STARTING_POSE = new Pose2d(-36.5, -62, Math.toRadians(270));
