@@ -37,7 +37,7 @@ public class CommonAutoCommand extends SequentialCommandGroup {
                         new InstantCommand(robot.m_dropper::back),
                         new FollowTrajSequence(robot.m_drive, robot.m_drive.trajectorySequenceBuilder(backboardTraj.end())
                                 .addDisplacementMarker(2.3, () -> robot.m_lift.toInitial())
-                                .forward(3)
+                                .forward(5)
                                 .build())
                 )
         );

@@ -60,10 +60,10 @@ public class ScrappyTeleOp extends ScrappyTeleOpBase {
 
         // Manual IntakeExt
         m_driverOne.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(new InstantCommand(() -> robot.m_intake.setExtRelativePosition(.6)));
+                .whenPressed(new InstantCommand(robot.m_intake::down));
 
         m_driverOne.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
-                .whenPressed(new InstantCommand(() -> robot.m_intake.setExtRelativePosition(0.1)));
+                .whenPressed(new InstantCommand(robot.m_intake::up));
 
         // Dropper
         m_driverOne.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)

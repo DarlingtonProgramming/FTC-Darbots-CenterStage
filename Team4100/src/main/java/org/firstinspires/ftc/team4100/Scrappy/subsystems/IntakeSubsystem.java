@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class IntakeSubsystem extends SubsystemBase {
     public static double EXT_UP_POS = 0.65;
-    public static double EXT_DOWN_POS = 0.12;
+    public static double EXT_DOWN_POS = 0.15;
 
     private final DcMotorEx m_intake;
     private final Servo m_extension;

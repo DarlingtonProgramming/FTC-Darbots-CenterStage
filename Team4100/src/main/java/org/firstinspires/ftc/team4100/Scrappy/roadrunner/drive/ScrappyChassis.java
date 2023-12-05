@@ -87,7 +87,7 @@ public class ScrappyChassis extends MecanumDrive {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(2)), 1);
+                new Pose2d(0.5, 0.5, Math.toRadians(2)), 0.7);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 

@@ -16,17 +16,17 @@ import org.firstinspires.ftc.team4100.Scrappy.vision.PropDetectionProcessor;
 
 @Autonomous
 @Config
-public class RedLeftNew extends ScrappyAutoBase {
+public class RedLeftStackk extends ScrappyAutoBase {
     public static double delay = 0;
     public static final Pose2d m_poseEstimate = new Pose2d(-38, -61.75, Math.toRadians(90));
     private final Parking m_parking;
 
-    public RedLeftNew() {
+    public RedLeftStackk() {
         super(ScrappyCore.AllianceType.RED, ScrappyCore.AllianceSide.LEFT, m_poseEstimate);
         m_parking = Parking.MIDDLE;
     }
 
-    public RedLeftNew(Parking parking) {
+    public RedLeftStackk(Parking parking) {
         super(ScrappyCore.AllianceType.RED, ScrappyCore.AllianceSide.LEFT, m_poseEstimate);
         m_parking = parking;
     }

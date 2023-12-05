@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.team4100.Scrappy.autonomous.blue.left;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyAutoBase;
 import org.firstinspires.ftc.team4100.Scrappy.ScrappyCore;
 import org.firstinspires.ftc.team4100.Scrappy.commands.CommonAutoCommand;
+import org.firstinspires.ftc.team4100.Scrappy.commands.FollowTrajSequence;
 import org.firstinspires.ftc.team4100.Scrappy.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.team4100.Scrappy.roadrunner.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.team4100.Scrappy.vision.PropDetectionProcessor;
@@ -59,11 +62,18 @@ public class BlueLeftNew extends ScrappyAutoBase {
             backboardTrajBuilder.lineToSplineHeading(new Pose2d(27, detectionResult == PropDetectionProcessor.Detection.LEFT ? 47 : 41, Math.toRadians(90)));
         }
 
-        double backboardTrajY = detectionResult == PropDetectionProcessor.Detection.LEFT ? 44 : detectionResult == PropDetectionProcessor.Detection.MIDDLE ? 37 : 28.5;
+        double backboardTrajY = detectionResult == PropDetectionProcessor.Detection.LEFT ? 44 : detectionResult == PropDetectionProcessor.Detection.MIDDLE ? 35.5 : 28.5;
         backboardTrajBuilder.lineToSplineHeading(new Pose2d(51.5, backboardTrajY, Math.toRadians(180)));
 
         TrajectorySequence backboardTraj = backboardTrajBuilder.build();
 
-        schedule(new CommonAutoCommand(robot, detectionTraj, backboardTraj));
+        schedule(new SequentialCommandGroup(
+                new CommonAutoCommand(robot, detectionTraj, backboardTraj),
+                new FollowTrajSequence(robot.m_drive, robot.m_drive.trajectorySequenceBuilder(backboardTraj.end())
+                        .lineTo(new Vector2d(47, 10.5))
+                        .lineTo(new Vector2d(57, 11.5))
+                        .build()
+                )
+        ));
     }
 }
